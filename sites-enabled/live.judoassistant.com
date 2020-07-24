@@ -1,7 +1,7 @@
 server {
   listen 80;
   listen [::]:80;
-  server_name www.judoassistant.com judoassistant.com;
+  server_name live.judoassistant.com;
 
   return 301 https://$host$request_uri;
 }
@@ -11,13 +11,12 @@ server {
   listen 443 ssl;
   add_header Strict-Transport-Security "max-age=63072000; includeSubdomains;";
 
-  server_name www.judoassistant.com judoassistant.com;
-
-  root /var/www/judoassistant.com/html;
-  index index.html;
+  server_name live.judoassistant.com;
 
   location / {
-    try_files $uri $uri/ =404;
+    proxy_pass http://judoassistant-web-frontend:8000;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
   }
 
   ssl_certificate /etc/letsencrypt/live/judoassistant.com/fullchain.pem;
