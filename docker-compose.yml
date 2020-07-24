@@ -1,33 +1,44 @@
 version: '3.1'
 services:
-    frontend:
-      image: judoassistant/judoassistant-web-frontend:latest
-      container_name: judoassistant-frontend
-    db:
-        image: postgres:12.3-alpine
-        container_name: judoassistant-postgres
-        volumes:
-          - postgres:/var/lib/postgresql/data
-          - ./db-init.sh:/docker-entrypoint-initdb.d/init-user-db.sh:ro
-        environment:
-            POSTGRES_USER: ${ROOT_USER}
-            POSTGRES_PASSWORD: ${POSTGRES_ROOT_PASSWORD}
-            POSTGRES_DB: ${ROOT_USER}
-            POSTGRES_JUDOASSISTANT_PASSWORD: ${POSTGRES_JUDOASSISTANT_PASSWORD}
-    nginx:
-        image: nginx:alpine
-        container_name: judoassistant-nginx
-        volumes:
-          - ./nginx.conf:/etc/nginx/nginx.conf:ro
-          - ./sites-enabled:/etc/nginx/sites-enabled:ro
-          - /var/www/judoassistant.com/html:/var/www/judoassistant.com/html:ro
-          - /etc/letsencrypt:/etc/letsencrypt
-        ports:
-          - "80:80"
-          - "443:443"
-        depends_on:
-          - frontend
+  db:
+    image: postgres:12.3-alpine
+    container_name: judoassistant-postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      - ./db-init.sh:/docker-entrypoint-initdb.d/init-user-db.sh:ro
+    environment:
+      POSTGRES_USER: ${ROOT_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_ROOT_PASSWORD}
+      POSTGRES_DB: ${ROOT_USER}
+      POSTGRES_JUDOASSISTANT_PASSWORD: ${POSTGRES_JUDOASSISTANT_PASSWORD}
+  frontend:
+    image: judoassistant/judoassistant-web-frontend:latest
+    container_name: judoassistant-frontend
+  backend:
+    image: judoassistant/judoassistant-web-backend:latest
+    container_name: judoassistant-backend
+    volumes:
+      - judoassistant-backend:/var/judoassistant
+    environment:
+      POSTGRES_HOST: judoassistant-postgres
+      POSTGRES_DB: judoassistant
+      POSTGRES_USER: judoassistant
+      POSTGRES_PASSWORD: ${POSTGRES_JUDOASSISTANT_PASSWORD}
+      THREAD_COUNT: ${BACKEND_THREAD_COUNT}
+  nginx:
+    image: nginx:alpine
+    container_name: judoassistant-nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./sites-enabled:/etc/nginx/sites-enabled:ro
+      - /var/www/judoassistant.com/html:/var/www/judoassistant.com/html:ro
+      - /etc/letsencrypt:/etc/letsencrypt
+    ports:
+        - "80:80"
+        - "443:443"
+      depends_on:
+        - frontend
 volumes:
-    postgres:
-    tournaments:
+  postgres:
+  judoassistant-backend:
 
