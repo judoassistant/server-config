@@ -18,10 +18,11 @@ usermod -a -G admin svendcs # add svendcs to admin group
 ```
 
 Now copy public keys into `.ssh/authorized_keys` for `ci` and `svendcs`.
-Afterwards disable root shh login. Proceed by installing the packages used by
-the setup:
+Afterwards disable root shh login. Proceed by upgrading the system and
+installing the neccesary packages:
 ```bash
 apt update
+apt upgrade
 apt install neovim docker docker-compose ufw python3-certbot-dns-digitalocean
 ```
 
