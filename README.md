@@ -8,7 +8,7 @@ Setup Guide
 -----------
 Start by creating a Digital Ocean droplet on Ubuntu 20.04 and perform the
 following steps:
-```
+```bash
 adduser svendcs # add user svendcs
 adduser ci # add user ci
 passwd # set root password
@@ -20,14 +20,13 @@ usermod -a -G admin svendcs # add svendcs to admin group
 Now copy public keys into `.ssh/authorized_keys` for `ci` and `svendcs`.
 Afterwards disable root shh login. Proceed by installing the packages used by
 the setup:
-
-```
+```bash
 apt update
 apt install neovim docker docker-compose ufw python3-certbot-dns-digitalocean
 ```
 
 Setup the firewall rules:
-```
+```bash
 ufw default deny incoming
 ufw default allow outgoing
 ufw allow ssh
@@ -42,9 +41,10 @@ and reboot the system.
 
 We now wish to setup the letsencrypt keys. We use the digital ocean dns plugin
 for certbot. Follow the steps described [here](https://certbot-dns-digitalocean.readthedocs.io/en/stable/)
-to create the file `/var/certbot/digital_ocean_credentials.ini` and `chmod 400`.
+to create the file `/var/certbot/digital_ocean_credentials.ini` and `chmod 400`
+the file. Create the certificates using cerbot standalone mode:
 
-```
+```bash
 certbot certonly --dns-digitalocean --dns-digitalocean-credentials /var/certbot/digital_ocean_credentials.ini -d judoassistant.com -d live.judoassistant.com
 ````
 
