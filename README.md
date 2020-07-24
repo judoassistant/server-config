@@ -47,7 +47,7 @@ the file. Create the certificates using cerbot standalone mode:
 
 ```bash
 certbot certonly --dns-digitalocean --dns-digitalocean-credentials /var/certbot/digital_ocean_credentials.ini -d judoassistant.com -d live.judoassistant.com
-````
+```
 
 Database Initialization
 -----------------------
@@ -55,7 +55,15 @@ In order to initialize the database and run migrations you can use the
 judoassistant alembic docker image. First pull the judoassistant main git repo
 and create the `alembic.ini` file from the template file.
 
-You can then run the migrations on the postgres database as follows:
+You can then run the migrations tool on the postgres database as follows:
 ```bash
-sudo docker run --rm --network judoassistant-server-config_default -v $(pwd)/alembic.ini:/alembic.ini -v $(pwd)/alembic:/alembic/alembic:ro judoassistant/alembic upgrade head
+sudo docker run --rm --network judoassistant-server-config_default -v $(pwd)/alembic.ini:/alembic.ini -v $(pwd)/alembic:/alembic/alembic:ro judoassistant/alembic --help
+```
+
+Managing the database
+---------------------
+Managing the users and tournaments in the database is currently done using the
+server-toolkit. There is a docker image created for this purpose:
+```bash
+sudo docker run --rm --network judoassistant-server-config_default -e DATABASE_URL=${DATABASE_URL} judoassistant/judoassistant-server-toolkit --help
 ```
