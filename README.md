@@ -65,5 +65,6 @@ Managing the database
 Managing the users and tournaments in the database is currently done using the
 server-toolkit. There is a docker image created for this purpose:
 ```bash
+ export DATABASE_URL="postgresql://judoassistant:password@judoassistant-postgres/judoassistant"
 sudo docker run --rm --network judoassistant-server-config_default -e DATABASE_URL=${DATABASE_URL} judoassistant/judoassistant-server-toolkit --help
 ```
