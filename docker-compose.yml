@@ -11,11 +11,12 @@ services:
         ports:
           - "80:80"
           - "443:443"
-    web-frontend:
+    frontend:
       image: judoassistant/judoassistant-web-frontend:latest
-      container_name: judoassistant-web-frontend
+      container_name: judoassistant-frontend
     db:
         image: postgres:12.3-alpine
+        container_name: judoassistant-postgres
         volumes:
           - postgres:/var/lib/postgresql/data
           - ./db-init.sh:/docker-entrypoint-initdb.d/init-user-db.sh:ro
