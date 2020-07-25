@@ -33,6 +33,7 @@ ufw default allow outgoing
 ufw allow ssh
 ufw allow http
 ufw allow https
+ufw allow 9000/tcp # backend tcp streams
 ufw enable
 ```
 
