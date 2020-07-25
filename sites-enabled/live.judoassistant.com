@@ -19,6 +19,16 @@ server {
     proxy_set_header X-Real-IP $remote_addr;
   }
 
+  location /ws {
+    proxy_pass http://judoassistant-backend:9001;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_read_timeout 86400;
+  }
+
   ssl_certificate /etc/letsencrypt/live/judoassistant.com/fullchain.pem;
   ssl_certificate_key /etc/letsencrypt/live/judoassistant.com/privkey.pem;
   #include /etc/letsencrypt/options-ssl-nginx.conf;
