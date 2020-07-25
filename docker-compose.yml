@@ -15,7 +15,7 @@ services:
     image: judoassistant/judoassistant-web-frontend:latest
     container_name: judoassistant-frontend
   backend:
-    image: judoassistant/judoassistant-web-backend:latest
+    image: judoassistant/judoassistant-web:latest
     container_name: judoassistant-backend
     volumes:
       - judoassistant-backend:/var/judoassistant
@@ -25,6 +25,8 @@ services:
       POSTGRES_USER: judoassistant
       POSTGRES_PASSWORD: ${POSTGRES_JUDOASSISTANT_PASSWORD}
       THREAD_COUNT: ${BACKEND_THREAD_COUNT}
+    depends_on:
+      - db
   nginx:
     image: nginx:alpine
     container_name: judoassistant-nginx
@@ -38,6 +40,7 @@ services:
       - "443:443"
     depends_on:
       - frontend
+      - backend
 volumes:
   postgres:
   judoassistant-backend:
