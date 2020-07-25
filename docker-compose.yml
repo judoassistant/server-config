@@ -34,10 +34,10 @@ services:
       - /var/www/judoassistant.com/html:/var/www/judoassistant.com/html:ro
       - /etc/letsencrypt:/etc/letsencrypt
     ports:
-        - "80:80"
-        - "443:443"
-      depends_on:
-        - frontend
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - frontend
 volumes:
   postgres:
   judoassistant-backend:
