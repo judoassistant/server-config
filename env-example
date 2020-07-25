@@ -2,4 +2,5 @@ ROOT_USER=svendcs
 POSTGRES_ROOT_PASSWORD=password
 POSTGRES_JUDOASSISTANT_PASSWORD=password
 BACKEND_THREAD_COUNT=2
+DATABASE_URL="postgresql://judoassistant:password@judoassistant-postgres/judoassistant"
 
