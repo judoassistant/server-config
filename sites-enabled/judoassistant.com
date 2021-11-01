@@ -13,10 +13,9 @@ server {
 
   server_name www.judoassistant.com judoassistant.com;
 
-  root /var/www/judoassistant.com/html;
-  index index.html;
-
   location / {
+    root /var/www/judoassistant.com/html;
+    index index.html;
     try_files $uri $uri/ =404;
   }
 

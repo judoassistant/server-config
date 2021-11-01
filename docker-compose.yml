@@ -11,9 +11,6 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_ROOT_PASSWORD}
       POSTGRES_DB: ${ROOT_USER}
       POSTGRES_JUDOASSISTANT_PASSWORD: ${POSTGRES_JUDOASSISTANT_PASSWORD}
-  frontend:
-    image: judoassistant/judoassistant-web-frontend:latest
-    container_name: judoassistant-frontend
   backend:
     image: judoassistant/judoassistant-web:latest
     container_name: judoassistant-backend
@@ -34,13 +31,13 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ./sites-enabled:/etc/nginx/sites-enabled:ro
       - /var/www/judoassistant.com/html:/var/www/judoassistant.com/html:ro
+      - /var/www/live.judoassistant.com/html:/var/www/live.judoassistant.com/html:ro
       - /etc/letsencrypt:/etc/letsencrypt
     ports:
       - "80:80"
       - "443:443"
       - "9000:9000"
     depends_on:
-      - frontend
       - backend
 volumes:
   postgres:

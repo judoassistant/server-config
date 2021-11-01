@@ -14,9 +14,9 @@ server {
   server_name live.judoassistant.com;
 
   location / {
-    proxy_pass http://judoassistant-frontend:8000;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
+    root   /var/www/live.judoassistant.com/html;
+    index  index.html;
+    try_files $uri $uri/ /index.html;
   }
 
   location /ws {
