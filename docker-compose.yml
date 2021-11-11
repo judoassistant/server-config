@@ -24,9 +24,10 @@ services:
       THREAD_COUNT: ${BACKEND_THREAD_COUNT}
     depends_on:
       - db
-    restart_policy:
-      condition: on-failure
-      max_atempts: 3
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
   nginx:
     image: nginx:alpine
     container_name: judoassistant-nginx
